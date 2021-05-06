@@ -5,28 +5,50 @@
             <form name="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Full Name" name="fullName"
-                        [(ngModel)]="model.fullName" #fullName="ngModel" />
+                        [(ngModel)]="model.fullName" #fullName="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && fullName.invalid }" required />
+                    <div *ngIf="f.submitted && fullName.invalid" class="invalid-feedback">
+                        <div *ngIf="fullName.errors.required">Full Name is required and must be a valid name</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="model.email"
-                        #email="ngModel" />
+                        #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                        <div *ngIf="email.errors.required">Email is required</div>
+                        <div *ngIf="email.errors.email">Enter a valid email address. e.g.. john@example.com</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="Phone Number" placeholder="Phone Number"
-                        [(ngModel)]="model.phoneNo" #phoneNo="ngModel" />
-                </div>
+                        [(ngModel)]="model.phoneNo" #phoneNo="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && phoneNo.invalid }" required minlength="10" maxlength="12"/>
+                        <div *ngIf="f.submitted && phoneNo.invalid" class="invalid-feedback">
+                            <div *ngIf="phoneNo.errors.required">Phone Number is required</div>
+                            <div *ngIf="phoneNo.errors.minlength || phoneNo.errors.maxlength">Password must be minimum 10 digits and maximum 12 digits in length</div>
+                        </div>
+                    </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password"
-                        #password="ngModel" />
+                    <input type="password" class="form-control" placeholder="Password" name="password"
+                        [(ngModel)]="model.password" #password="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required minlength="6" />
+                    <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                        <div *ngIf="password.errors.required">Password is required</div>
+                        <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Confirm password" name="confirmPassword"
-                        [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" />
+                        [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.invalid }" required />
+                        <div *ngIf="f.submitted && confirmPassword.invalid" class="invalid-feedback">
+                            <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                            <div *ngIf="passwordMismatch">Password Mismatch</div>
+                        </div>
                 </div>
                 <div class="form-group" style="display: flex;
                 align-items: center;">
                     <input type="checkbox" class="form-control" name="termsAndConditions" style="width:20px"
-                        [(ngModel)]="model.termsAndConditions" #termsAndConditions="ngModel" />Agree to the Terms and conditions
+                        [(ngModel)]="model.termsAndConditions" #termsAndConditions="ngModel" />Agree to the Terms and
+                    conditions
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary">Register</button>

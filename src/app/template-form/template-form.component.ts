@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class TemplateFormComponent implements OnInit {
   model: any = {};
   submitted: boolean = false;
+  passwordMismatch: boolean = false;
+  
   constructor() { }
 
   ngOnInit(): void {
